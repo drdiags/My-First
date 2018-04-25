@@ -8,7 +8,6 @@ RUN yum -y install postfix
 RUN easy_install supervisor
 RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisord.conf
-#COPY jenkins /etc/sysconfig/jenkins
 RUN sed -i 's/.*mydestination = $myhostname, localhost.$mydomain.*/mydestination = $myhostname, localhost.$mydomain, $mydomain/' /etc/postfix/main.cf
 RUN sed -i 's/.*inet_interfaces = .*/inet_interfaces = loopback-only/' /etc/postfix/main.cf
 RUN cp /etc/profile /etc/profile_backup
@@ -20,7 +19,6 @@ RUN sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-sta
 RUN sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 RUN sudo yum -y install jenkins
 COPY jenkins /etc/sysconfig/jenkins
-COPY mkimage-yum.sh /usr/local/bin
 RUN chown -c jenkins:jenkins /var/lib/jenkins
 RUN chsh -s /bin/bash jenkins
 RUN yum -y install docker-ce
