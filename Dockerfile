@@ -1,6 +1,8 @@
 FROM centos:7
 LABEL Name="First Love"
 MAINTAINER James Clough <jclough@cray.com>
+RUN useradd -ms /bin/bash jenkins
+USER jenkins
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum -y install openssl-devel python-devel java-1.8.0-openjdk which unzip wget epel-release kernel-headers kernel-devel rsync perl rpm make vim sudo openssh-clients docker-ce mailx yum-utils device-mapper-persistent-data lvm2 supervisor python-setuptools mailutils python-yaml
 RUN yum -y groupinstall 'Development Tools'
